@@ -1264,10 +1264,10 @@
 
 // Preheat Constants
 #define PREHEAT_1_TEMP_HOTEND 220
-#define PREHEAT_1_TEMP_BED    60
+#define PREHEAT_1_TEMP_BED 65
 #define PREHEAT_1_FAN_SPEED   0 // Value from 0 to 255
 
-#define PREHEAT_2_TEMP_HOTEND 240
+#define PREHEAT_2_TEMP_HOTEND 200
 #define PREHEAT_2_TEMP_BED    0
 #define PREHEAT_2_FAN_SPEED   0 // Value from 0 to 255
 
