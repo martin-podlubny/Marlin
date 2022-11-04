@@ -355,7 +355,7 @@
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
 #define HEATER_4_MAXTEMP 275
-#define BED_MAXTEMP 75
+#define BED_MAXTEMP 95 // the actual maxtemp is this minus 15... so 95-15 = 80c
 
 //===========================================================================
 //============================= PID Settings ================================
