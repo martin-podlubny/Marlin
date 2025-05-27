@@ -34,34 +34,34 @@ namespace LanguageNarrow_de {
   constexpr uint8_t CHARSIZE              = 2;
   LSTR LANGUAGE                           = _UxGT("Deutsch");
 
-  LSTR WELCOME_MSG                        = MACHINE_NAME _UxGT(" bereit");
+  LSTR WELCOME_MSG                        = MACHINE_NAME_SUBST _UxGT(" bereit");
   LSTR MSG_YES                            = _UxGT("JA");
   LSTR MSG_NO                             = _UxGT("NEIN");
   LSTR MSG_HIGH                           = _UxGT("HOCH");
   LSTR MSG_LOW                            = _UxGT("RUNTER");
   LSTR MSG_BACK                           = _UxGT("Zurück");
   LSTR MSG_ERROR                          = _UxGT("Fehler");
+
   LSTR MSG_MEDIA_ABORTING                 = _UxGT("Abbruch...");
   LSTR MSG_MEDIA_INSERTED                 = _UxGT("Medium erkannt");
   LSTR MSG_MEDIA_REMOVED                  = _UxGT("Medium entfernt");
-  LSTR MSG_MEDIA_WAITING                  = _UxGT("Warten auf Medium");
   LSTR MSG_MEDIA_INIT_FAIL                = _UxGT("Medium Init fehlgesch.");
   LSTR MSG_MEDIA_READ_ERROR               = _UxGT("Medium Lesefehler");
-  LSTR MSG_MEDIA_USB_REMOVED              = _UxGT("USB Gerät entfernt");
-  LSTR MSG_MEDIA_USB_FAILED               = _UxGT("USB Start fehlge.");
+  LSTR MSG_USB_FD_DEVICE_REMOVED          = _UxGT("USB Gerät entfernt");
+  LSTR MSG_USB_FD_USB_FAILED              = _UxGT("USB Start fehlge.");
   LSTR MSG_KILL_SUBCALL_OVERFLOW          = _UxGT("Subcall überschritten");
+
   LSTR MSG_LCD_ENDSTOPS                   = _UxGT("Endstopp"); // Max length 8 characters
   LSTR MSG_LCD_SOFT_ENDSTOPS              = _UxGT("Software-Endstopp");
   LSTR MSG_MAIN_MENU                      = _UxGT("Hauptmenü");
   LSTR MSG_ADVANCED_SETTINGS              = _UxGT("Erw. Einstellungen");
   LSTR MSG_CONFIGURATION                  = _UxGT("Konfiguration");
-  LSTR MSG_RUN_AUTO_FILES                 = _UxGT("Autostart");
   LSTR MSG_DISABLE_STEPPERS               = _UxGT("Motoren deaktivieren"); // M84 :: Max length 19 characters
   LSTR MSG_DEBUG_MENU                     = _UxGT("Debug-Menü");
   LSTR MSG_PROGRESS_BAR_TEST              = _UxGT("Statusbalken-Test");
   LSTR MSG_HOMING                         = _UxGT("Homing");
   LSTR MSG_AUTO_HOME                      = _UxGT("Auto Home");
-  LSTR MSG_AUTO_HOME_A                    = _UxGT("Home @");
+  LSTR MSG_AUTO_HOME_N                    = _UxGT("Home @");
   LSTR MSG_AUTO_HOME_X                    = _UxGT("Home X");
   LSTR MSG_AUTO_HOME_Y                    = _UxGT("Home Y");
   LSTR MSG_AUTO_HOME_Z                    = _UxGT("Home Z");
@@ -132,6 +132,7 @@ namespace LanguageNarrow_de {
   LSTR MSG_EXTRUDE                        = _UxGT("Extrudieren");
   LSTR MSG_RETRACT                        = _UxGT("Einzug");
   LSTR MSG_MOVE_AXIS                      = _UxGT("Achsen bewegen");
+  LSTR MSG_PROBE_AND_LEVEL                = _UxGT("Sonden nivellieren");
   LSTR MSG_BED_LEVELING                   = _UxGT("Bett-Nivellierung");
   LSTR MSG_LEVEL_BED                      = _UxGT("Bett nivellieren");
   LSTR MSG_BED_TRAMMING                   = _UxGT("Bett ausrichten");
@@ -173,7 +174,7 @@ namespace LanguageNarrow_de {
   LSTR MSG_IDEX_MODE_FULL_CTRL            = _UxGT("vollstä. Kontrolle");
   LSTR MSG_IDEX_DUPE_GAP                  = _UxGT("X-Lücke duplizieren");
   LSTR MSG_HOTEND_OFFSET_Z                = _UxGT("2. Düse Z");
-  LSTR MSG_HOTEND_OFFSET_A                = _UxGT("2. Düse @");
+  LSTR MSG_HOTEND_OFFSET_N                = _UxGT("2. Düse @");
   LSTR MSG_UBL_DOING_G29                  = _UxGT("G29 ausführen");
   LSTR MSG_UBL_TOOLS                      = _UxGT("UBL-Werkzeuge");
   LSTR MSG_LCD_TILTING_MESH               = _UxGT("Berührungspunkt");
@@ -186,13 +187,10 @@ namespace LanguageNarrow_de {
   LSTR MSG_UBL_BC_INSERT2                 = _UxGT("Messen");
   LSTR MSG_UBL_BC_REMOVE                  = _UxGT("Entfernen & messen");
   LSTR MSG_UBL_MOVING_TO_NEXT             = _UxGT("Nächster Punkt...");
-  LSTR MSG_UBL_ACTIVATE_MESH              = _UxGT("UBL aktivieren");
-  LSTR MSG_UBL_DEACTIVATE_MESH            = _UxGT("UBL deaktivieren");
   LSTR MSG_UBL_SET_TEMP_BED               = _UxGT("Betttemperatur");
   LSTR MSG_UBL_BED_TEMP_CUSTOM            = _UxGT("Betttemperatur");
   LSTR MSG_UBL_SET_TEMP_HOTEND            = _UxGT("Hotend-Temp.");
   LSTR MSG_UBL_HOTEND_TEMP_CUSTOM         = _UxGT("Hotend-Temp.");
-  LSTR MSG_UBL_MESH_EDIT                  = _UxGT("Netz bearbeiten");
   LSTR MSG_UBL_EDIT_CUSTOM_MESH           = _UxGT("Eigenes Netz bearb.");
   LSTR MSG_UBL_FINE_TUNE_MESH             = _UxGT("Feineinstellung...");
   LSTR MSG_UBL_DONE_EDITING_MESH          = _UxGT("Bearbeitung beendet");
@@ -256,7 +254,8 @@ namespace LanguageNarrow_de {
   LSTR MSG_UBL_7_SAVE_MESH                = _UxGT("7.Bettnetz speichern");
 
   LSTR MSG_LED_CONTROL                    = _UxGT("Licht-Steuerung");
-  LSTR MSG_LEDS                           = _UxGT("Licht");
+  LSTR MSG_LIGHTS                         = _UxGT("Licht");
+  LSTR MSG_LIGHT_N                        = _UxGT("Lichter #{");
   LSTR MSG_LED_PRESETS                    = _UxGT("Licht-Einstellung");
   LSTR MSG_SET_LEDS_RED                   = _UxGT("Rot");
   LSTR MSG_SET_LEDS_ORANGE                = _UxGT("Orange");
@@ -268,7 +267,6 @@ namespace LanguageNarrow_de {
   LSTR MSG_SET_LEDS_WHITE                 = _UxGT("Weiß");
   LSTR MSG_SET_LEDS_DEFAULT               = _UxGT("Standard");
   LSTR MSG_LED_CHANNEL_N                  = _UxGT("Kanal {");
-  LSTR MSG_LEDS2                          = _UxGT("Lichter #2");
   LSTR MSG_NEO2_PRESETS                   = _UxGT("Licht #2 Voreinst.");
   LSTR MSG_NEO2_BRIGHTNESS                = _UxGT("Helligkeit");
   LSTR MSG_CUSTOM_LEDS                    = _UxGT("Benutzerdefiniert");
@@ -495,9 +493,14 @@ namespace LanguageNarrow_de {
   LSTR MSG_FILAMENTUNLOAD                 = _UxGT("Filament entladen");
   LSTR MSG_FILAMENTUNLOAD_E               = _UxGT("Filament entladen *");
   LSTR MSG_FILAMENTUNLOAD_ALL             = _UxGT("Alles entladen");
-  LSTR MSG_ATTACH_MEDIA                   = _UxGT("Medium initial."); // Manually initialize the SD-card via user interface
+
+  LSTR MSG_ATTACH_MEDIA                   = _UxGT("SD initial.");
+  LSTR MSG_ATTACH_SD                      = _UxGT("SD initial.");
+  LSTR MSG_ATTACH_USB                     = _UxGT("USB initial.");
   LSTR MSG_CHANGE_MEDIA                   = _UxGT("Medium getauscht"); // SD-card changed by user. For machines with no autocarddetect. Both send "M21"
   LSTR MSG_RELEASE_MEDIA                  = _UxGT("Medium freigeben"); // if Marlin gets confused - M22
+  LSTR MSG_RUN_AUTOFILES                  = _UxGT("Autostart");
+
   LSTR MSG_ZPROBE_OUT                     = _UxGT("Z-Sonde außerhalb");
   LSTR MSG_SKEW_FACTOR                    = _UxGT("Korrekturfaktor");
   LSTR MSG_BLTOUCH                        = _UxGT("BLTouch");
@@ -527,6 +530,8 @@ namespace LanguageNarrow_de {
   LSTR MSG_ZPROBE_XOFFSET                 = _UxGT("Sondenversatz X");
   LSTR MSG_ZPROBE_YOFFSET                 = _UxGT("Sondenversatz Y");
   LSTR MSG_ZPROBE_ZOFFSET                 = _UxGT("Sondenversatz Z");
+  LSTR MSG_ZPROBE_OFFSET_N                = _UxGT("Sondenversatz @");
+  LSTR MSG_BABYSTEP_PROBE_Z               = _UxGT("Z Offset mit Pas");
   LSTR MSG_ZPROBE_MARGIN                  = _UxGT("Sondenrand");
   LSTR MSG_Z_FEED_RATE                    = _UxGT("Z-Vorschub");
   LSTR MSG_ENABLE_HS_MODE                 = _UxGT("HS-Modus aktivieren");
@@ -714,7 +719,8 @@ namespace LanguageNarrow_de {
   LSTR MSG_TMC_HYBRID_THRS                = _UxGT("Hybrid threshold");
   LSTR MSG_TMC_HOMING_THRS                = _UxGT("Sensorloses Homing");
   LSTR MSG_TMC_STEPPING_MODE              = _UxGT("Schrittmodus");
-  LSTR MSG_TMC_STEALTH_ENABLED            = _UxGT("StealthChop einsch.");
+  LSTR MSG_TMC_STEALTHCHOP                = _UxGT("StealthChop");
+
   LSTR MSG_SERVICE_RESET                  = _UxGT("Reset");
   LSTR MSG_SERVICE_IN                     = _UxGT(" im:");
   LSTR MSG_BACKLASH                       = _UxGT("Spiel");

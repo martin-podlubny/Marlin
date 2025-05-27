@@ -197,7 +197,7 @@ bool MarlinUI::detected() { return true; }
       #endif
         {
           #if ENABLED(CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME)
-            const uint8_t fr = _MIN(f, COUNT(custom_bootscreen_animation) - 1);
+            const uint8_t fr = ALIM(f, custom_bootscreen_animation);
             const millis_t frame_time = pgm_read_word(&custom_bootscreen_animation[fr].duration);
           #endif
           u8g.firstPage();
@@ -390,8 +390,9 @@ void MarlinUI::clear_for_drawing() {
 }
 
 #if HAS_DISPLAY_SLEEP
+  static bool asleep = false;
+  bool MarlinUI::display_is_asleep() { return asleep; }
   void MarlinUI::sleep_display(const bool sleep/*=true*/) {
-    static bool asleep = false;
     if (asleep != sleep) {
       sleep ? u8g.sleepOn() : u8g.sleepOff();
       asleep = sleep;
@@ -619,7 +620,7 @@ void MarlinUI::clear_for_drawing() {
       const uint8_t maxlen = LCD_WIDTH - isDir;
       if (isDir) lcd_put_lchar(LCD_STR_FOLDER[0]);
       const pixel_len_t pixw = maxlen * (MENU_FONT_WIDTH);
-      pixel_len_t n = pixw - lcd_put_u8str_max(ui.scrolled_filename(theCard, maxlen, row, sel), pixw);
+      pixel_len_t n = pixw - lcd_put_u8str_max(ui.scrolled_filename(theCard, maxlen, sel), pixw);
       for (; n > MENU_FONT_WIDTH; n -= MENU_FONT_WIDTH) lcd_put_u8str(F(" "));
     }
 

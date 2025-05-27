@@ -74,10 +74,12 @@ namespace ExtUI {
   void onMinTempError(const heater_id_t header_id) {}
   void onMaxTempError(const heater_id_t header_id) {}
 
-  void onStatusChanged(const char *lcd_msg) { StatusScreen::setStatusMessage(lcd_msg); }
+  void onStatusChanged(const char * const lcd_msg) { StatusScreen::setStatusMessage(lcd_msg); }
 
   void onPrintTimerStarted() {
     InterfaceSoundsScreen::playEventSound(InterfaceSoundsScreen::PRINTING_STARTED);
+    current_screen.forget();
+    PUSH_SCREEN(StatusScreen);
   }
   void onPrintTimerStopped() {
     InterfaceSoundsScreen::playEventSound(InterfaceSoundsScreen::PRINTING_FINISHED);
@@ -118,17 +120,24 @@ namespace ExtUI {
     if (msg)
       ConfirmUserRequestAlertBox::show(msg);
     else
-      ConfirmUserRequestAlertBox::hide();
+      ConfirmUserRequestAlertBox::show("Press Resume to Continue");
   }
 
+  #if ENABLED(ADVANCED_PAUSE_FEATURE)
+    void filament_load_prompt(const char * const msg) {
+      if (msg)
+        FilamentPromptBox::show();
+      else
+        FilamentPromptBox::hide();
+    }
+  #endif
+
   // For fancy LCDs include an icon ID, message, and translated button title
-  void onUserConfirmRequired(const int icon, const char * const cstr, FSTR_P const fBtn) {
+  void onUserConfirmRequired(const int, const char * const cstr, FSTR_P const) {
     onUserConfirmRequired(cstr);
-    UNUSED(icon); UNUSED(fBtn);
   }
-  void onUserConfirmRequired(const int icon, FSTR_P const fstr, FSTR_P const fBtn) {
+  void onUserConfirmRequired(const int, FSTR_P const fstr, FSTR_P const) {
     onUserConfirmRequired(fstr);
-    UNUSED(icon); UNUSED(fBtn);
   }
 
   #if ENABLED(ADVANCED_PAUSE_FEATURE)

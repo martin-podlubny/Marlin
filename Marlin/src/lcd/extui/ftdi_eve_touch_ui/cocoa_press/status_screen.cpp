@@ -116,7 +116,7 @@ void StatusScreen::send_buffer(CommandProcessor &cmd, const void *data, uint16_t
     memcpy_P(block, ptr, nBytes);
     cmd.write((const void*)block, nBytes);
     cmd.execute();
-    if(cmd.has_fault()) {
+    if (cmd.has_fault()) {
       SERIAL_ECHOLNPGM("Recovering from fault: ");
       cmd.reset();
       delay(1000);
@@ -432,8 +432,10 @@ void StatusScreen::onIdle() {
 }
 
 void StatusScreen::onMediaMounted() {
-  if (AT_SCREEN(StatusScreen))
-    setStatusMessage(GET_TEXT_F(MSG_MEDIA_INSERTED));
+  if (!AT_SCREEN(StatusScreen)) return;
+  setStatusMessage(ExtUI::isMediaMountedSD()  ? GET_TEXT_F(MSG_MEDIA_INSERTED_SD) :
+                   ExtUI::isMediaMountedUSB() ? GET_TEXT_F(MSG_MEDIA_INSERTED_USB) :
+                                                GET_TEXT_F(MSG_MEDIA_INSERTED));
 }
 
 void StatusScreen::onMediaRemoved() {

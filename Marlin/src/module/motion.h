@@ -50,7 +50,7 @@ extern xyze_pos_t current_position,  // High-level current tool position
 
 // G60/G61 Position Save and Return
 #if SAVED_POSITIONS
-  extern uint8_t saved_slots[(SAVED_POSITIONS + 7) >> 3]; // TODO: Add support for HAS_I_AXIS
+  extern Flags<SAVED_POSITIONS> did_save_position;
   extern xyze_pos_t stored_position[SAVED_POSITIONS];
 #endif
 
@@ -68,10 +68,13 @@ extern xyz_pos_t cartes;
 #elif defined(XY_PROBE_FEEDRATE)
   #define XY_PROBE_FEEDRATE_MM_S MMM_TO_MMS(XY_PROBE_FEEDRATE)
 #else
-  #define XY_PROBE_FEEDRATE_MM_S PLANNER_XY_FEEDRATE()
+  #define XY_PROBE_FEEDRATE_MM_S PLANNER_XY_FEEDRATE_MM_S
 #endif
 
-#if HAS_BED_PROBE
+#ifdef Z_PROBE_FEEDRATE_SLOW
+  constexpr feedRate_t z_probe_slow_mm_s = MMM_TO_MMS(Z_PROBE_FEEDRATE_SLOW);
+#endif
+#ifdef Z_PROBE_FEEDRATE_FAST
   constexpr feedRate_t z_probe_fast_mm_s = MMM_TO_MMS(Z_PROBE_FEEDRATE_FAST);
 #endif
 
@@ -79,7 +82,12 @@ extern xyz_pos_t cartes;
  * Feed rates are often configured with mm/m
  * but the planner and stepper like mm/s units.
  */
-constexpr xyz_feedrate_t homing_feedrate_mm_m = HOMING_FEEDRATE_MM_M;
+#if ENABLED(EDITABLE_HOMING_FEEDRATE)
+  extern xyz_feedrate_t homing_feedrate_mm_m;
+#else
+  constexpr xyz_feedrate_t homing_feedrate_mm_m = HOMING_FEEDRATE_MM_M;
+#endif
+
 FORCE_INLINE feedRate_t homing_feedrate(const AxisEnum a) {
   float v = TERN0(HAS_Z_AXIS, homing_feedrate_mm_m.z);
   #if DISABLED(DELTA)
@@ -136,11 +144,11 @@ inline int8_t pgm_read_any(const int8_t *p) { return TERN(__IMXRT1062__, *p, pgm
     static const XYZval<T> NAME##_P DEFS_PROGMEM = NUM_AXIS_ARRAY(X_##OPT, Y_##OPT, Z_##OPT, I_##OPT, J_##OPT, K_##OPT, U_##OPT, V_##OPT, W_##OPT); \
     return pgm_read_any(&NAME##_P[axis]); \
   }
-XYZ_DEFS(float, base_min_pos,   MIN_POS);
-XYZ_DEFS(float, base_max_pos,   MAX_POS);
-XYZ_DEFS(float, base_home_pos,  HOME_POS);
-XYZ_DEFS(float, max_length,     MAX_LENGTH);
-XYZ_DEFS(int8_t, home_dir, HOME_DIR);
+XYZ_DEFS(float,  base_min_pos,  MIN_POS);     // base_min_pos(axis)
+XYZ_DEFS(float,  base_max_pos,  MAX_POS);     // base_max_pos(axis)
+XYZ_DEFS(float,  base_home_pos, HOME_POS);    // base_home_pos(axis)
+XYZ_DEFS(float,  max_length,    MAX_LENGTH);  // max_length(axis)
+XYZ_DEFS(int8_t, home_dir,      HOME_DIR);    // home_dir(axis)
 
 // Flags for rotational axes
 constexpr AxisFlags rotational{0 LOGICAL_AXIS_GANG(
@@ -390,8 +398,8 @@ void do_blocking_move_to(const xyze_pos_t &raw, const_feedRate_t fr_mm_s=0.0f);
   void do_blocking_move_to_xyzijku_v(const xyze_pos_t &raw, const_float_t v, const_feedRate_t fr_mm_s=0.0f);
 #endif
 #if HAS_W_AXIS
-  void do_blocking_move_to_w(const float rw, const feedRate_t &fr_mm_s=0.0f);
-  void do_blocking_move_to_xyzijkuv_w(const xyze_pos_t &raw, const float w, const feedRate_t &fr_mm_s=0.0f);
+  void do_blocking_move_to_w(const_float_t rw, const_feedRate_t fr_mm_s=0.0f);
+  void do_blocking_move_to_xyzijkuv_w(const xyze_pos_t &raw, const_float_t w, const_feedRate_t fr_mm_s=0.0f);
 #endif
 
 #if HAS_Y_AXIS
@@ -433,6 +441,10 @@ void restore_feedrate_and_scaling();
 typedef bits_t(NUM_AXES) main_axes_bits_t;
 constexpr main_axes_bits_t main_axes_mask = _BV(NUM_AXES) - 1;
 
+#if HAS_Z_AXIS
+  extern bool z_min_trusted; // If Z has been powered on trust that the real Z is >= current_position.z
+#endif
+
 void set_axis_is_at_home(const AxisEnum axis);
 
 #if HAS_ENDSTOPS
@@ -467,7 +479,7 @@ inline void set_all_homed()                           { TERN_(HAS_ENDSTOPS, axes
 
 inline bool axis_was_homed(const AxisEnum axis)       { return TEST(axes_homed, axis); }
 inline bool axis_is_trusted(const AxisEnum axis)      { return TEST(axes_trusted, axis); }
-inline bool axis_should_home(const AxisEnum axis)     { return (axes_should_home() & _BV(axis)) != 0; }
+inline bool axis_should_home(const AxisEnum axis)     { return axes_should_home(_BV(axis)) != 0; }
 inline bool no_axes_homed()                           { return !axes_homed; }
 inline bool all_axes_homed()                          { return main_axes_mask == (axes_homed & main_axes_mask); }
 inline bool homing_needed()                           { return !all_axes_homed(); }
@@ -627,8 +639,16 @@ void home_if_needed(const bool keeplev=false);
   void set_home_offset(const AxisEnum axis, const_float_t v);
 #endif
 
+//
+// Trinamic Stepper Drivers
+//
 #if USE_SENSORLESS
   struct sensorless_t;
   sensorless_t start_sensorless_homing_per_axis(const AxisEnum axis);
   void end_sensorless_homing_per_axis(const AxisEnum axis, sensorless_t enable_stealth);
+#endif
+
+#if HAS_HOMING_CURRENT
+  void set_homing_current(const AxisEnum axis);
+  void restore_homing_current(const AxisEnum axis);
 #endif

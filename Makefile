@@ -6,9 +6,10 @@ UNIT_TEST_CONFIG ?= default
 
 help:
 	@echo "Tasks for local development:"
-	@echo "make marlin                    : Build marlin for the configured board"
+	@echo "make marlin                    : Build Marlin for the configured board"
 	@echo "make format-pins -j            : Reformat all pins files (-j for parallel execution)"
 	@echo "make validate-pins -j          : Validate all pins files, fails if any require reformatting"
+	@echo "make validate-boards -j        : Validate boards.h and pins.h for standards compliance"
 	@echo "make tests-single-ci           : Run a single test from inside the CI"
 	@echo "make tests-single-local        : Run a single test locally"
 	@echo "make tests-single-local-docker : Run a single test locally, using docker"
@@ -16,7 +17,7 @@ help:
 	@echo "make tests-all-local-docker    : Run all tests locally, using docker"
 	@echo "make unit-test-single-local    : Run unit tests for a single config locally"
 	@echo "make unit-test-single-local-docker : Run unit tests for a single config locally, using docker"
-	@echo "make unit-test-all-local      : Run all code tests locally"
+	@echo "make unit-test-all-local       : Run all code tests locally"
 	@echo "make unit-test-all-local-docker : Run all code tests locally, using docker"
 	@echo "make setup-local-docker        : Setup local docker using buildx"
 	@echo ""
@@ -102,3 +103,11 @@ format-pins: $(PINS)
 validate-pins: format-pins
 	@echo "Validating pins files"
 	@git diff --exit-code || (git status && echo "\nError: Pins files are not formatted correctly. Run \"make format-pins\" to fix.\n" && exit 1)
+
+BOARDS_FILE := Marlin/src/core/boards.h
+
+.PHONY: validate-boards
+
+validate-boards:
+	@echo "Validating boards.h file"
+	@python $(SCRIPTS_DIR)/validate_boards.py $(BOARDS_FILE) || (echo "\nError: boards.h file is not valid. Please check and correct it.\n" && exit 1)
