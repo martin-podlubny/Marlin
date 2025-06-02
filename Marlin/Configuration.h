@@ -152,9 +152,9 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC2240', 'TMC2240_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#define X_DRIVER_TYPE TMC2208
-#define Y_DRIVER_TYPE TMC2208
-#define Z_DRIVER_TYPE TMC2208
+#define X_DRIVER_TYPE TMC2208_STANDALONE
+#define Y_DRIVER_TYPE TMC2208_STANDALONE
+#define Z_DRIVER_TYPE TMC2208_STANDALONE
 // #define X2_DRIVER_TYPE A4988
 // #define Y2_DRIVER_TYPE A4988
 // #define Z2_DRIVER_TYPE A4988
@@ -166,7 +166,7 @@
 // #define U_DRIVER_TYPE  A4988
 // #define V_DRIVER_TYPE  A4988
 // #define W_DRIVER_TYPE  A4988
-#define E0_DRIVER_TYPE TMC2208
+#define E0_DRIVER_TYPE TMC2208_STANDALONE
 // #define E1_DRIVER_TYPE A4988
 // #define E2_DRIVER_TYPE A4988
 // #define E3_DRIVER_TYPE A4988
@@ -1654,7 +1654,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET {-32, -41, 0}
+#define NOZZLE_TO_PROBE_OFFSET {-30, -40, -4.5}
 
 // Enable and set to use a specific tool for probing. Disable to allow any tool.
 #define PROBING_TOOL 0
@@ -1664,7 +1664,7 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 10
+#define PROBING_MARGIN 5
 
 // X and Y axis travel speed between probes.
 // Leave undefined to use the average of the current XY homing feedrate.
@@ -1860,7 +1860,7 @@
  */
 // #define Z_IDLE_HEIGHT Z_HOME_POS
 
-#define Z_CLEARANCE_FOR_HOMING 5 // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_CLEARANCE_FOR_HOMING 10 // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                  // You'll need this much clearance above Z_MAX_POS to avoid grinding.
 
 // #define Z_AFTER_HOMING         10   // (mm) Height to move to after homing (if Z was homed)
@@ -1905,9 +1905,9 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 227
+#define X_MAX_POS 232
 #define Y_MAX_POS 240
-#define Z_MAX_POS 170
+#define Z_MAX_POS 200
 // #define I_MIN_POS 0
 // #define I_MAX_POS 50
 // #define J_MIN_POS 0
