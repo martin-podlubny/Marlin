@@ -568,7 +568,7 @@
  *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  */
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 13
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -656,7 +656,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 310
+#define HEATER_0_MAXTEMP 315
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -693,7 +693,7 @@
 #define PIDTEMP // See the PID Tuning Guide at https://reprap.org/wiki/PID_Tuning
 // #define MPCTEMP         // See https://marlinfw.org/docs/features/model_predictive_control.html
 
-#define PID_MAX 255 // Limit hotend current while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
+#define PID_MAX 200 // Limit hotend current while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95 // Smoothing factor within any PID loop
 
 #if ENABLED(PIDTEMP)
@@ -710,9 +710,12 @@
 #define DEFAULT_Ki_LIST {2.62, 2.62}
 #define DEFAULT_Kd_LIST {78.81, 78.81}
 #else
-#define DEFAULT_Kp 28.72
-#define DEFAULT_Ki 2.62
-#define DEFAULT_Kd 78.81
+// #define DEFAULT_Kp 28.72
+// #define DEFAULT_Ki 2.62
+// #define DEFAULT_Kd 78.81
+#define DEFAULT_Kp 25.31
+#define DEFAULT_Ki 3.40
+#define DEFAULT_Kd 47.18
 #endif
 #else
 #define BANG_MAX 255 // Limit hotend current while in bang-bang mode; 255=full current
@@ -1654,7 +1657,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET {-30, -40, -4.5}
+#define NOZZLE_TO_PROBE_OFFSET {-30, -40, -4.65}
 
 // Enable and set to use a specific tool for probing. Disable to allow any tool.
 #define PROBING_TOOL 0
