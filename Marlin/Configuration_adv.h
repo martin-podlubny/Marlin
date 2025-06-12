@@ -577,29 +577,29 @@
  * The fan turns on automatically whenever any driver is enabled and turns
  * off (or reduces to idle speed) shortly after drivers are turned off.
  */
-//#define USE_CONTROLLER_FAN
+#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
-  //#define CONTROLLER_FAN_PIN -1           // Set a custom pin for the controller fan
-  //#define CONTROLLER_FAN2_PIN -1          // Set a custom pin for second controller fan
-  //#define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
-  //#define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
-  #define CONTROLLERFAN_SPEED_MIN         0 // (0-255) Minimum speed. (If set below this value the fan is turned off.)
-  #define CONTROLLERFAN_SPEED_ACTIVE    255 // (0-255) Active speed, used when any motor is enabled
-  #define CONTROLLERFAN_SPEED_IDLE        0 // (0-255) Idle speed, used when motors are disabled
-  #define CONTROLLERFAN_IDLE_TIME        60 // (seconds) Extra time to keep the fan running after disabling motors
+#define CONTROLLER_FAN_PIN PB15                      // Set a custom pin for the controller fan
+// #define CONTROLLER_FAN2_PIN -1          // Set a custom pin for second controller fan
+// #define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
+// #define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
+#define CONTROLLERFAN_SPEED_MIN 0      // (0-255) Minimum speed. (If set below this value the fan is turned off.)
+#define CONTROLLERFAN_SPEED_ACTIVE 255 // (0-255) Active speed, used when any motor is enabled
+#define CONTROLLERFAN_SPEED_IDLE 0     // (0-255) Idle speed, used when motors are disabled
+#define CONTROLLERFAN_IDLE_TIME 60     // (seconds) Extra time to keep the fan running after disabling motors
 
-  // Use TEMP_SENSOR_BOARD as a trigger for enabling the controller fan
-  //#define CONTROLLER_FAN_MIN_BOARD_TEMP 40  // (°C) Turn on the fan if the board reaches this temperature
+// Use TEMP_SENSOR_BOARD as a trigger for enabling the controller fan
+// #define CONTROLLER_FAN_MIN_BOARD_TEMP 40  // (°C) Turn on the fan if the board reaches this temperature
 
-  // Use TEMP_SENSOR_SOC as a trigger for enabling the controller fan
-  //#define CONTROLLER_FAN_MIN_SOC_TEMP 40  // (°C) Turn on the fan if the SoC reaches this temperature
+// Use TEMP_SENSOR_SOC as a trigger for enabling the controller fan
+// #define CONTROLLER_FAN_MIN_SOC_TEMP 40  // (°C) Turn on the fan if the SoC reaches this temperature
 
-  #define CONTROLLER_FAN_BED_HEATING        // Turn on the fan when heating the bed
+#define CONTROLLER_FAN_BED_HEATING // Turn on the fan when heating the bed
 
-  //#define CONTROLLER_FAN_EDITABLE         // Enable M710 configurable settings
-  #if ENABLED(CONTROLLER_FAN_EDITABLE)
-    #define CONTROLLER_FAN_MENU             // Enable the Controller Fan submenu
-  #endif
+#define CONTROLLER_FAN_EDITABLE         // Enable M710 configurable settings
+#if ENABLED(CONTROLLER_FAN_EDITABLE)
+#define CONTROLLER_FAN_MENU // Enable the Controller Fan submenu
+#endif
 #endif
 
 /**
@@ -689,7 +689,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN 7
+#define E0_AUTO_FAN_PIN PC7
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -933,7 +933,7 @@
 
 //#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (linear=mm, rotational=°) Backoff from endstops before sensorless homing
 
-#define HOMING_BUMP_MM      { 5, 5, 2 }       // (linear=mm, rotational=°) Backoff from endstops after first bump
+#define HOMING_BUMP_MM      { 4, 4, 2 }       // (linear=mm, rotational=°) Backoff from endstops after first bump
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 
 //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (linear=mm, rotational=°) Backoff from endstops after homing
@@ -1548,7 +1548,7 @@
   #endif
 
   // Include a page of printer information in the LCD Main Menu
-  //#define LCD_INFO_MENU
+  #define LCD_INFO_MENU
   #if ENABLED(LCD_INFO_MENU)
     //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
     //#define BUILD_INFO_MENU_ITEM           // Add a menu item to display the build date and time
@@ -1631,7 +1631,7 @@
   //#define LCD_TIMEOUT_TO_STATUS 15000   // (ms)
 
   // Scroll a longer status message into view
-  //#define STATUS_MESSAGE_SCROLLING
+  #define STATUS_MESSAGE_SCROLLING
 
   // Apply a timeout to low-priority status messages
   //#define STATUS_MESSAGE_TIMEOUT_SEC 30 // (seconds)
@@ -1823,7 +1823,7 @@
    *  - SDSORT_CACHE_NAMES will retain the sorted file listing in RAM. (Expensive!)
    *  - SDSORT_DYNAMIC_RAM only uses RAM when the SD menu is visible. (Use with caution!)
    */
-  //#define SDCARD_SORT_ALPHA
+  #define SDCARD_SORT_ALPHA
 
   // SD Card Sorting options
   #if ENABLED(SDCARD_SORT_ALPHA)
@@ -1831,9 +1831,9 @@
     #define SDSORT_LIMIT       40     // Maximum number of sorted items (10-256). Costs 27 bytes each.
     #define SDSORT_FOLDERS     -1     // -1=above  0=none  1=below
     #define SDSORT_GCODE       false  // Enable G-code M34 to set sorting behaviors: M34 S<-1|0|1> F<-1|0|1>
-    #define SDSORT_USES_RAM    false  // Pre-allocate a static array for faster pre-sorting.
+    #define SDSORT_USES_RAM    true  // Pre-allocate a static array for faster pre-sorting.
     #define SDSORT_USES_STACK  false  // Prefer the stack for pre-sorting to give back some SRAM. (Negated by next 2 options.)
-    #define SDSORT_CACHE_NAMES false  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
+    #define SDSORT_CACHE_NAMES true  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
     #define SDSORT_DYNAMIC_RAM false  // Use dynamic allocation (within SD menus). Least expensive option. Set SDSORT_LIMIT before use!
     #define SDSORT_CACHE_VFATS 2      // Maximum number of 13-byte VFAT entries to use for sorting.
                                       // Note: Only affects SCROLL_LONG_FILENAMES with SDSORT_CACHE_NAMES but not SDSORT_DYNAMIC_RAM.
@@ -1841,13 +1841,13 @@
 
   // Allow international symbols in long filenames. To display correctly, the
   // LCD's font must contain the characters. Check your selected LCD language.
-  //#define UTF_FILENAME_SUPPORT
+  #define UTF_FILENAME_SUPPORT
 
   //#define LONG_FILENAME_HOST_SUPPORT    // Get the long filename of a file/folder with 'M33 <dosname>' and list long filenames with 'M20 L'
   //#define LONG_FILENAME_WRITE_SUPPORT   // Create / delete files with long filenames via M28, M30, and Binary Transfer Protocol
   //#define M20_TIMESTAMP_SUPPORT         // Include timestamps by adding the 'T' flag to M20 commands
 
-  //#define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
+  #define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
 
   //#define SD_ABORT_NO_COOLDOWN          // Leave the heaters on after Stop Print (not recommended!)
 
@@ -1863,7 +1863,7 @@
 
   //#define SD_REPRINT_LAST_SELECTED_FILE // On print completion open the LCD Menu and select the same file
 
-  //#define AUTO_REPORT_SD_STATUS         // Auto-report media status with 'M27 S<seconds>'
+  #define AUTO_REPORT_SD_STATUS         // Auto-report media status with 'M27 S<seconds>'
 
   /**
    * Support for USB thumb drives using an Arduino USB Host Shield or
@@ -1951,7 +1951,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+  #define SDCARD_CONNECTION ONBOARD
 
   // Enable if SD detect is rendered useless (e.g., by using an SD extender)
   //#define NO_SD_DETECT
@@ -2302,15 +2302,15 @@
 #define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define EP_BABYSTEPPING                 // M293/M294 babystepping with EMERGENCY_PARSER support
-  //#define BABYSTEP_WITHOUT_HOMING
-  //#define BABYSTEP_ALWAYS_AVAILABLE       // Allow babystepping at all times (not just during movement)
+  #define BABYSTEP_WITHOUT_HOMING
+  #define BABYSTEP_ALWAYS_AVAILABLE       // Allow babystepping at all times (not just during movement)
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   //#define BABYSTEP_INVERT_Z               // Enable if Z babysteps should go the other way
   //#define BABYSTEP_MILLIMETER_UNITS       // Specify BABYSTEP_MULTIPLICATOR_(XY|Z) in mm instead of micro-steps
   #define BABYSTEP_MULTIPLICATOR_Z  10       // (steps or mm) Steps or millimeter distance for each Z babystep
   #define BABYSTEP_MULTIPLICATOR_XY 1       // (steps or mm) Steps or millimeter distance for each XY babystep
 
-  //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
+  #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
     #define DOUBLECLICK_MAX_INTERVAL 1250   // (ms) Maximum interval between clicks.
                                             // Note: Extra time may be added to mitigate controller latency.
@@ -2320,7 +2320,7 @@
     #endif
   #endif
 
-  //#define BABYSTEP_DISPLAY_TOTAL          // Display total babysteps since last G28
+  #define BABYSTEP_DISPLAY_TOTAL          // Display total babysteps since last G28
 
   #define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
@@ -2346,18 +2346,18 @@
  *
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  */
-//#define LIN_ADVANCE
+#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   #if ENABLED(DISTINCT_E_FACTORS)
     #define ADVANCE_K { 0.22 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
   #else
-    #define ADVANCE_K 0.22        // (mm) Compression length applying to all extruders
+    #define ADVANCE_K 0.0       // (mm) Compression length applying to all extruders
   #endif
   //#define ADVANCE_K_EXTRA       // Add a second linear advance constant, configurable with M900 L.
   //#define LA_DEBUG              // Print debug information to serial during operation. Disable for production use.
-  //#define EXPERIMENTAL_I2S_LA   // Allow I2S_STEPPER_STREAM to be used with LA. Performance degrades as the LA step rate reaches ~20kHz.
+  // #define EXPERIMENTAL_I2S_LA   // Allow I2S_STEPPER_STREAM to be used with LA. Performance degrades as the LA step rate reaches ~20kHz.
 
-  //#define SMOOTH_LIN_ADVANCE    // Remove limits on acceleration by gradual increase of nozzle pressure
+  #define SMOOTH_LIN_ADVANCE    // Remove limits on acceleration by gradual increase of nozzle pressure
   #if ENABLED(SMOOTH_LIN_ADVANCE)
     /**
      * ADVANCE_TAU is also the time ahead that the smoother needs to look
@@ -2372,7 +2372,7 @@
       #define ADVANCE_TAU 0.02       // (s) Smoothing time to reduce extruder acceleration
     #endif
     #define SMOOTH_LIN_ADV_HZ 1000   // (Hz) How often to update extruder speed
-    #define INPUT_SHAPING_E_SYNC     // Synchronize the extruder-shaped XY axes (to increase precision)
+    // #define INPUT_SHAPING_E_SYNC     // Synchronize the extruder-shaped XY axes (to increase precision)
   #endif
 #endif
 
@@ -2713,7 +2713,7 @@
  * Currently handles M108, M112, M410, M876
  * NOTE: Not yet implemented for all platforms.
  */
-//#define EMERGENCY_PARSER
+#define EMERGENCY_PARSER
 
 /**
  * Realtime Reporting (requires EMERGENCY_PARSER)
@@ -3039,8 +3039,8 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(X)
-    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
-    #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for homing. (Typically lower than *_CURRENT.)
+    #define X_CURRENT       580        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT_HOME  X_CURRENT / 2  // (mA) RMS current for homing. (Typically lower than *_CURRENT.)
     #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
@@ -3059,8 +3059,8 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(Y)
-    #define Y_CURRENT       800
-    #define Y_CURRENT_HOME  Y_CURRENT
+    #define Y_CURRENT       580
+    #define Y_CURRENT_HOME  Y_CURRENT / 2
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1
@@ -3080,7 +3080,7 @@
 
   #if AXIS_IS_TMC_CONFIG(Z)
     #define Z_CURRENT       800
-    #define Z_CURRENT_HOME  Z_CURRENT
+    #define Z_CURRENT_HOME  Z_CURRENT / 2
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
@@ -3377,170 +3377,172 @@
    * Define your own with:
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V        // All axes (override below)
-  //#define CHOPPER_TIMING_X  CHOPPER_TIMING        // For X Axes (override below)
-  //#define CHOPPER_TIMING_X2 CHOPPER_TIMING_X
-  //#define CHOPPER_TIMING_Y  CHOPPER_TIMING        // For Y Axes (override below)
-  //#define CHOPPER_TIMING_Y2 CHOPPER_TIMING_Y
-  //#define CHOPPER_TIMING_Z  CHOPPER_TIMING        // For Z Axes (override below)
-  //#define CHOPPER_TIMING_Z2 CHOPPER_TIMING_Z
-  //#define CHOPPER_TIMING_Z3 CHOPPER_TIMING_Z
-  //#define CHOPPER_TIMING_Z4 CHOPPER_TIMING_Z
-  //#define CHOPPER_TIMING_I  CHOPPER_TIMING        // For I Axis
-  //#define CHOPPER_TIMING_J  CHOPPER_TIMING        // For J Axis
-  //#define CHOPPER_TIMING_K  CHOPPER_TIMING        // For K Axis
-  //#define CHOPPER_TIMING_U  CHOPPER_TIMING        // For U Axis
-  //#define CHOPPER_TIMING_V  CHOPPER_TIMING        // For V Axis
-  //#define CHOPPER_TIMING_W  CHOPPER_TIMING        // For W Axis
-  //#define CHOPPER_TIMING_E  CHOPPER_TIMING        // For Extruders (override below)
-  //#define CHOPPER_TIMING_E1 CHOPPER_TIMING_E
-  //#define CHOPPER_TIMING_E2 CHOPPER_TIMING_E
-  //#define CHOPPER_TIMING_E3 CHOPPER_TIMING_E
-  //#define CHOPPER_TIMING_E4 CHOPPER_TIMING_E
-  //#define CHOPPER_TIMING_E5 CHOPPER_TIMING_E
-  //#define CHOPPER_TIMING_E6 CHOPPER_TIMING_E
-  //#define CHOPPER_TIMING_E7 CHOPPER_TIMING_E
+#define CHOPPER_TIMING CHOPPER_DEFAULT_24V // All axes (override below)
+// #define CHOPPER_TIMING_X  CHOPPER_TIMING        // For X Axes (override below)
+// #define CHOPPER_TIMING_X2 CHOPPER_TIMING_X
+// #define CHOPPER_TIMING_Y  CHOPPER_TIMING        // For Y Axes (override below)
+// #define CHOPPER_TIMING_Y2 CHOPPER_TIMING_Y
+// #define CHOPPER_TIMING_Z  CHOPPER_TIMING        // For Z Axes (override below)
+// #define CHOPPER_TIMING_Z2 CHOPPER_TIMING_Z
+// #define CHOPPER_TIMING_Z3 CHOPPER_TIMING_Z
+// #define CHOPPER_TIMING_Z4 CHOPPER_TIMING_Z
+// #define CHOPPER_TIMING_I  CHOPPER_TIMING        // For I Axis
+// #define CHOPPER_TIMING_J  CHOPPER_TIMING        // For J Axis
+// #define CHOPPER_TIMING_K  CHOPPER_TIMING        // For K Axis
+// #define CHOPPER_TIMING_U  CHOPPER_TIMING        // For U Axis
+// #define CHOPPER_TIMING_V  CHOPPER_TIMING        // For V Axis
+// #define CHOPPER_TIMING_W  CHOPPER_TIMING        // For W Axis
+// #define CHOPPER_TIMING_E  CHOPPER_TIMING        // For Extruders (override below)
+// #define CHOPPER_TIMING_E1 CHOPPER_TIMING_E
+// #define CHOPPER_TIMING_E2 CHOPPER_TIMING_E
+// #define CHOPPER_TIMING_E3 CHOPPER_TIMING_E
+// #define CHOPPER_TIMING_E4 CHOPPER_TIMING_E
+// #define CHOPPER_TIMING_E5 CHOPPER_TIMING_E
+// #define CHOPPER_TIMING_E6 CHOPPER_TIMING_E
+// #define CHOPPER_TIMING_E7 CHOPPER_TIMING_E
 
-  // @section tmc/status
+// @section tmc/status
 
-  /**
-   * Monitor Trinamic drivers
-   * for error conditions like overtemperature and short to ground.
-   * To manage over-temp Marlin can decrease the driver current until the error condition clears.
-   * Other detected conditions can be used to stop the current print.
-   * Relevant G-codes:
-   * M906 - Set or get motor current in milliamps using axis codes X, Y, Z, E. Report values if no axis codes given.
-   * M911 - Report stepper driver overtemperature pre-warn condition.
-   * M912 - Clear stepper driver overtemperature pre-warn condition flag.
-   * M122 - Report driver parameters (Requires TMC_DEBUG)
-   */
-  //#define MONITOR_DRIVER_STATUS
+/**
+ * Monitor Trinamic drivers
+ * for error conditions like overtemperature and short to ground.
+ * To manage over-temp Marlin can decrease the driver current until the error condition clears.
+ * Other detected conditions can be used to stop the current print.
+ * Relevant G-codes:
+ * M906 - Set or get motor current in milliamps using axis codes X, Y, Z, E. Report values if no axis codes given.
+ * M911 - Report stepper driver overtemperature pre-warn condition.
+ * M912 - Clear stepper driver overtemperature pre-warn condition flag.
+ * M122 - Report driver parameters (Requires TMC_DEBUG)
+ */
+// #define MONITOR_DRIVER_STATUS
 
-  #if ENABLED(MONITOR_DRIVER_STATUS)
-    #define CURRENT_STEP_DOWN     50  // [mA]
-    #define REPORT_CURRENT_CHANGE
-    #define STOP_ON_ERROR
-  #endif
+#if ENABLED(MONITOR_DRIVER_STATUS)
+#define CURRENT_STEP_DOWN 50 // [mA]
+#define REPORT_CURRENT_CHANGE
+#define STOP_ON_ERROR
+#endif
 
-  // @section tmc/hybrid
+// @section tmc/hybrid
 
-  /**
-   * TMC2130, TMC2160, TMC2208, TMC2209, TMC2240, TMC5130 and TMC5160 only
-   * The driver will switch to spreadCycle when stepper speed is over HYBRID_THRESHOLD.
-   * This mode allows for faster movements at the expense of higher noise levels.
-   * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
-   * M913 X/Y/Z/E to live tune the setting
-   */
-  //#define HYBRID_THRESHOLD
+/**
+ * TMC2130, TMC2160, TMC2208, TMC2209, TMC2240, TMC5130 and TMC5160 only
+ * The driver will switch to spreadCycle when stepper speed is over HYBRID_THRESHOLD.
+ * This mode allows for faster movements at the expense of higher noise levels.
+ * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
+ * M913 X/Y/Z/E to live tune the setting
+ */
+// #define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD     100  // [mm/s]
-  #define X2_HYBRID_THRESHOLD    100
-  #define Y_HYBRID_THRESHOLD     100
-  #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD       3
-  #define Z2_HYBRID_THRESHOLD      3
-  #define Z3_HYBRID_THRESHOLD      3
-  #define Z4_HYBRID_THRESHOLD      3
-  #define I_HYBRID_THRESHOLD       3  // [linear=mm/s, rotational=°/s]
-  #define J_HYBRID_THRESHOLD       3  // [linear=mm/s, rotational=°/s]
-  #define K_HYBRID_THRESHOLD       3  // [linear=mm/s, rotational=°/s]
-  #define U_HYBRID_THRESHOLD       3  // [mm/s]
-  #define V_HYBRID_THRESHOLD       3
-  #define W_HYBRID_THRESHOLD       3
-  #define E0_HYBRID_THRESHOLD     30
-  #define E1_HYBRID_THRESHOLD     30
-  #define E2_HYBRID_THRESHOLD     30
-  #define E3_HYBRID_THRESHOLD     30
-  #define E4_HYBRID_THRESHOLD     30
-  #define E5_HYBRID_THRESHOLD     30
-  #define E6_HYBRID_THRESHOLD     30
-  #define E7_HYBRID_THRESHOLD     30
+#define X_HYBRID_THRESHOLD 100 // [mm/s]
+#define X2_HYBRID_THRESHOLD 100
+#define Y_HYBRID_THRESHOLD 100
+#define Y2_HYBRID_THRESHOLD 100
+#define Z_HYBRID_THRESHOLD 20
+#define Z2_HYBRID_THRESHOLD 3
+#define Z3_HYBRID_THRESHOLD 3
+#define Z4_HYBRID_THRESHOLD 3
+#define I_HYBRID_THRESHOLD 3 // [linear=mm/s, rotational=°/s]
+#define J_HYBRID_THRESHOLD 3 // [linear=mm/s, rotational=°/s]
+#define K_HYBRID_THRESHOLD 3 // [linear=mm/s, rotational=°/s]
+#define U_HYBRID_THRESHOLD 3 // [mm/s]
+#define V_HYBRID_THRESHOLD 3
+#define W_HYBRID_THRESHOLD 3
+#define E0_HYBRID_THRESHOLD 30
+#define E1_HYBRID_THRESHOLD 30
+#define E2_HYBRID_THRESHOLD 30
+#define E3_HYBRID_THRESHOLD 30
+#define E4_HYBRID_THRESHOLD 30
+#define E5_HYBRID_THRESHOLD 30
+#define E6_HYBRID_THRESHOLD 30
+#define E7_HYBRID_THRESHOLD 30
 
-  /**
-   * Use StallGuard to home / probe X, Y, Z.
-   *
-   * TMC2130, TMC2160, TMC2209, TMC2240, TMC2660, TMC5130, and TMC5160 only
-   * Connect the stepper driver's DIAG1 pin to the X/Y endstop pin.
-   * X, Y, and Z homing will always be done in spreadCycle mode.
-   *
-   * X/Y/Z_STALL_SENSITIVITY is the default stall threshold.
-   * Use M914 X Y Z to set the stall threshold at runtime:
-   *
-   *  Sensitivity  TMC2209/2240   Others
-   *    HIGHEST        255         -64    (Too sensitive => False positive)
-   *    LOWEST          0           63    (Too insensitive => No trigger)
-   *
-   * It is recommended to set HOMING_BUMP_MM to { 0, 0, 0 }.
-   *
-   * SPI_ENDSTOPS  *** TMC2130, TMC2240, and TMC5160 Only ***
-   * Poll the driver through SPI to determine load when homing.
-   * Removes the need for a wire from DIAG1 to an endstop pin.
-   *
-   * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
-   * homing and adds a guard period for endstop triggering.
-   *
-   * Comment *_STALL_SENSITIVITY to disable sensorless homing for that axis.
-   * @section tmc/stallguard
-   */
-  //#define SENSORLESS_HOMING // StallGuard capable drivers only
+/**
+ * Use StallGuard to home / probe X, Y, Z.
+ *
+ * TMC2130, TMC2160, TMC2209, TMC2240, TMC2660, TMC5130, and TMC5160 only
+ * Connect the stepper driver's DIAG1 pin to the X/Y endstop pin.
+ * X, Y, and Z homing will always be done in spreadCycle mode.
+ *
+ * X/Y/Z_STALL_SENSITIVITY is the default stall threshold.
+ * Use M914 X Y Z to set the stall threshold at runtime:
+ *
+ *  Sensitivity  TMC2209/2240   Others
+ *    HIGHEST        255         -64    (Too sensitive => False positive)
+ *    LOWEST          0           63    (Too insensitive => No trigger)
+ *
+ * It is recommended to set HOMING_BUMP_MM to { 0, 0, 0 }.
+ *
+ * SPI_ENDSTOPS  *** TMC2130, TMC2240, and TMC5160 Only ***
+ * Poll the driver through SPI to determine load when homing.
+ * Removes the need for a wire from DIAG1 to an endstop pin.
+ *
+ * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
+ * homing and adds a guard period for endstop triggering.
+ *
+ * Comment *_STALL_SENSITIVITY to disable sensorless homing for that axis.
+ * @section tmc/stallguard
+ */
+// #define SENSORLESS_HOMING // StallGuard capable drivers only
 
-  #if ANY(SENSORLESS_HOMING, SENSORLESS_PROBING)
-    // TMC2209/2240: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  8
-    #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
-    #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
-    //#define Z_STALL_SENSITIVITY  8
-    //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
-    //#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
-    //#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
-    //#define I_STALL_SENSITIVITY  8
-    //#define J_STALL_SENSITIVITY  8
-    //#define K_STALL_SENSITIVITY  8
-    //#define U_STALL_SENSITIVITY  8
-    //#define V_STALL_SENSITIVITY  8
-    //#define W_STALL_SENSITIVITY  8
-    //#define SPI_ENDSTOPS              // TMC2130, TMC2240, and TMC5160
-    //#define IMPROVE_HOMING_RELIABILITY
-  #endif
+#if ANY(SENSORLESS_HOMING, SENSORLESS_PROBING)
+// TMC2209/2240: 0...255. TMC2130: -64...63
+#define X_STALL_SENSITIVITY 8
+#define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
+#define Y_STALL_SENSITIVITY 8
+#define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
+// #define Z_STALL_SENSITIVITY  8
+// #define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+// #define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+// #define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+// #define I_STALL_SENSITIVITY  8
+// #define J_STALL_SENSITIVITY  8
+// #define K_STALL_SENSITIVITY  8
+// #define U_STALL_SENSITIVITY  8
+// #define V_STALL_SENSITIVITY  8
+// #define W_STALL_SENSITIVITY  8
+// #define SPI_ENDSTOPS              // TMC2130, TMC2240, and TMC5160
+// #define IMPROVE_HOMING_RELIABILITY
+#endif
 
-  // @section tmc/config
+// @section tmc/config
 
-  /**
-   * TMC Homing stepper phase.
-   *
-   * Improve homing repeatability by homing to stepper coil's nearest absolute
-   * phase position. Trinamic drivers use a stepper phase table with 1024 values
-   * spanning 4 full steps with 256 positions each (ergo, 1024 positions).
-   * Full step positions (128, 384, 640, 896) have the highest holding torque.
-   *
-   * Values from 0..1023, -1 to disable homing phase for that axis.
-   */
-   //#define TMC_HOME_PHASE { 896, 896, 896 }
+/**
+ * TMC Homing stepper phase.
+ *
+ * Improve homing repeatability by homing to stepper coil's nearest absolute
+ * phase position. Trinamic drivers use a stepper phase table with 1024 values
+ * spanning 4 full steps with 256 positions each (ergo, 1024 positions).
+ * Full step positions (128, 384, 640, 896) have the highest holding torque.
+ *
+ * Values from 0..1023, -1 to disable homing phase for that axis.
+ */
+// #define TMC_HOME_PHASE { 896, 896, 896 }
 
-  /**
-   * Step on both rising and falling edge signals (as with a square wave).
-   */
-  #define EDGE_STEPPING
+/**
+ * Step on both rising and falling edge signals (as with a square wave).
+ */
+#define EDGE_STEPPING
 
-  /**
-   * Enable M122 debugging command for TMC stepper drivers.
-   * M122 S0/1 will enable continuous reporting.
-   */
-  //#define TMC_DEBUG
+/**
+ * Enable M122 debugging command for TMC stepper drivers.
+ * M122 S0/1 will enable continuous reporting.
+ */
+#define TMC_DEBUG
 
-  /**
-   * You can set your own advanced settings by filling in predefined functions.
-   * A list of available functions can be found on the library github page
-   * https://github.com/teemuatlut/TMCStepper
-   *
-   * Example:
-   * #define TMC_ADV() { \
-   *   stepperX.diag0_otpw(1); \
-   *   stepperY.intpol(0); \
-   * }
-   */
-  #define TMC_ADV() {  }
+/**
+ * You can set your own advanced settings by filling in predefined functions.
+ * A list of available functions can be found on the library github page
+ * https://github.com/teemuatlut/TMCStepper
+ *
+ * Example:
+ * #define TMC_ADV() { \
+ *   stepperX.diag0_otpw(1); \
+ *   stepperY.intpol(0); \
+ * }
+ */
+#define TMC_ADV() \
+  {               \
+  }
 
 #endif // HAS_TRINAMIC_CONFIG
 
@@ -3960,7 +3962,7 @@
 /**
  * Extra options for the M114 "Current Position" report
  */
-//#define M114_DETAIL         // Use 'M114 D' for details to check planner calculations
+#define M114_DETAIL         // Use 'M114 D' for details to check planner calculations
 //#define M114_REALTIME       // Real current position based on forward kinematics
 //#define M114_LEGACY         // M114 used to synchronize on every call. Enable if needed.
 
@@ -3970,7 +3972,7 @@
  */
 //#define AUTO_REPORT_FANS
 
-//#define REPORT_FAN_CHANGE   // Report the new fan speed when changed by M106 (and others)
+#define REPORT_FAN_CHANGE   // Report the new fan speed when changed by M106 (and others)
 
 /**
  * Auto-report temperatures with M155 S<seconds>
